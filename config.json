@@ -1,0 +1,9 @@
+{
+    "discord": "None",
+    "modules": {
+        "bot": {
+            "T1": true,
+            "T2": true
+        }
+    }
+}

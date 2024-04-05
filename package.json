@@ -1,0 +1,13 @@
+{
+	"name": "@bdsx/atomic-anticheat",
+	"version": "1.0.0",
+	"description": "A simple anticheat to block hackers and bots",
+	"main": "index.js",
+	"keywords": ["BDSX", "BDSX-Plugin", "Anticheat"],
+	"author": "Atomic69420, AtomicTM6850 or ip_atomic",
+	"license": "CC-BY-NC-ND-4.0",
+	"bdsxPlugin": true,
+	"devDependencies": {
+	  "bdsx": "file:../bdsx"
+	}
+  }
