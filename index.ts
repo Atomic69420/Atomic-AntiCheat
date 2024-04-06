@@ -1,17 +1,15 @@
 import { NetworkIdentifier } from "bdsx/bds/networkidentifier";
-import axios from 'axios';
 import { LoginPacket } from "bdsx/bds/packets";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { events } from "bdsx/event";
-import { detectBots } from "./modules/bot.ts"
-import { detectBadPackets } from "./modules/badpacket.ts"
+import * as fetch from "node-fetch"
 export type pdatar = {
     ip: string;
     username: string;
     xuid: string;
     uuid: string;
     tid: number;
-    deviceos: string;
+    deviceos: number;
     devicemodel: string;
     deviceid: string;
 };
@@ -38,27 +36,36 @@ const login = (pkt: LoginPacket, ni: NetworkIdentifier) => {
     }
 }
 events.packetAfter(MinecraftPacketIds.Login).on(login);
-events.serverOpen.on(() => {
-	console.log('[Atomic-AntiCheat] Successfully Started Loading Sequence!')
-    detectBots()
-    detectBadPackets()
-});
+function Sequence(): void {
+    console.log('[Atomic-AntiCheat] Successfully Started Loading Sequence!')
+    import("./modules/bot");
+    import("./modules/badpacket");
+    }
+    events.serverOpen.on(Sequence);
+
 events.serverStop.on(() => {
     events.packetAfter(MinecraftPacketIds.Login).remove(login);
 })
+
 export type embed = {
     title: string;
     description?: string;
     color?: number;
 };
 
-export const sendwebhook = async (webhook: string, embeds: embed[]) => {
+export const sendwebhook = async (webhook: string, embeds: Embed[]) => {
     try {
         const payload = {
             embeds
         };
 
-        await axios.post(webhook, payload);
+        await fetch(webhook, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
     } catch (error) {
         console.log(`failed to send webhook ${error.message}`)
     }
