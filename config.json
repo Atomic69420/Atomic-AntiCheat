@@ -1,5 +1,6 @@
 {
     "discord": "None",
+    "prefix": "[Atomic-AntiCheat]",
     "modules": {
         "bot": {
             "T1": true,

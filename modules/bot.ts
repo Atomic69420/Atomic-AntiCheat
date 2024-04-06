@@ -8,6 +8,7 @@ export function detectBots() {
     console.log('[Atomic-AntiCheat] Loaded Bot Detections')
     interface botconfig {
         discord: string;
+        prefix: string;
         modules: {
           bot: {
             [key: string]: boolean;
@@ -28,14 +29,14 @@ export function detectBots() {
             const devicemodel = connreq.getJsonValue()!["DeviceModel"];
             if (config.modules.bot.T1 === true) {
             if (tid === 2047319603) {
-                bedrockServer.serverInstance.disconnectClient(ni, `[Atomic-AntiCheat]\nYou Have Been Kicked!\nReason: Suspected Bot [T1]\nDiscord: ${config.discord}`);
-                console.log(`[Atomic-AntiCheat]\nPlayer ${username} was kicked for Suspected Bot [T1] This means the player is either on Nintendo or a bot.`)
+                bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T1]\nDiscord: ${config.discord}`);
+                console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T1] This means the player is either on Nintendo or a bot.`)
             }
         }
         if (config.modules.bot.T2 === true) {
           if (devicemodel === "PrismarineJS") {
-              bedrockServer.serverInstance.disconnectClient(ni, `[Atomic-AntiCheat]\nYou Have Been Kicked!\nReason: Suspected Bot [T2]\nDiscord: ${config.discord}`);
-              console.log(`[Atomic-AntiCheat]\nPlayer ${username} was kicked for Suspected Bot [T2] This means the player is a bot`)
+              bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T2]\nDiscord: ${config.discord}`);
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T2] This means the player is a bot`)
           }
       }
     }
@@ -44,13 +45,13 @@ export function detectBots() {
     const pdata: pdatar | undefined = pdb.get(ni);
      if (config.modules.bot.T3 === true) {
       if (pdata) {
-      bedrockServer.serverInstance.disconnectClient(ni, `[Atomic-AntiCheat]\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
-      console.log(`[Atomic-AntiCheat]\nPlayer ${pdata.username} was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`)
+      bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
+      console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`)
       return CANCEL;
      }
     } else {
-      bedrockServer.serverInstance.disconnectClient(ni, `[Atomic-AntiCheat]\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
-      console.log(`[Atomic-AntiCheat]\A player was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`)
+      bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
+      console.log(`${config.prefix}\nA player was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`)
       return CANCEL;
     }
   }
