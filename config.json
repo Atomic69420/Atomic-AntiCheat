@@ -7,6 +7,9 @@
             "T1": true,
             "T2": true,
             "T3": true
+        },
+        "badpacket": {
+            "T1": true
         }
     }
 }

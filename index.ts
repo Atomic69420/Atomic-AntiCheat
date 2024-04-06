@@ -4,6 +4,7 @@ import { LoginPacket } from "bdsx/bds/packets";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { events } from "bdsx/event";
 import { detectBots } from "./modules/bot.ts"
+import { detectBadPackets } from "./modules/badpacket.ts"
 export type pdatar = {
     ip: string;
     username: string;
@@ -40,6 +41,7 @@ events.packetAfter(MinecraftPacketIds.Login).on(login);
 events.serverOpen.on(() => {
 	console.log('[Atomic-AntiCheat] Successfully Started Loading Sequence!')
     detectBots()
+    detectBadPackets()
 });
 events.serverStop.on(() => {
     events.packetAfter(MinecraftPacketIds.Login).remove(login);

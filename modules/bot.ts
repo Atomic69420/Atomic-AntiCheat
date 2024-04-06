@@ -7,18 +7,22 @@ import { CANCEL } from "bdsx/common";
 export function detectBots() {
     console.log('[Atomic-AntiCheat] Loaded Bot Detections')
     interface botconfig {
-        discord: string;
-        prefix: string;
-        webhook: string;
-        modules: {
-          bot: {
-            [key: string]: boolean;
-            T1?: boolean;
-            T2?: boolean;
-            T3?: boolean;
-          };
+      discord: string;
+      prefix: string;
+      webhook: string;
+      modules: {
+        bot: {
+          [key: string]: boolean;
+          T1?: boolean;
+          T2?: boolean;
+          T3?: boolean;
         };
-      }
+        badpacket: {
+          [key: string]: boolean;
+          T1?: boolean;
+        }
+      };
+    }
       const configdata = fs.readFileSync('./config.json', 'utf8');
       const config: botconfig = JSON.parse(configdata);
     events.packetAfter(MinecraftPacketIds.Login), (pkt, ni) => {
