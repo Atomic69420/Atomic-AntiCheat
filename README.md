@@ -15,5 +15,8 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Bot [T1] (Kicks players who have their title id set to 2047319603 this is used in bedrock protocol for authentication but also used by Nintendo players.)
 - Bot [T2] (Kicks players who have their device model set to PrismarineJS this is used in bedrock protocol for login details.)
 - Bot [T3] (Kicks players who request a sub client login which is a fake player that can often cause confusion.)
+- Bot [T4] (Kicks players who have their client random id as a string for it is to be a number.)
 ### Bad Packet Detections
 - Bad Packet [T1] (Kicks players who send a move player packet this is only used when ServerAuthoritativeMovementMode is false and is used in hack clients for some movement hacks.)
+### Speed Detections
+- Speed [T1] (Kicks players who are going to fast such has 0.5 which is fast according to the servers calculations although if ServerAuthoritativeMovementMode is false this check will not be implemented.)
