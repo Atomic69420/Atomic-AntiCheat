@@ -1,4 +1,5 @@
 import { NetworkIdentifier } from "bdsx/bds/networkidentifier";
+import axios from 'axios';
 import { LoginPacket } from "bdsx/bds/packets";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { events } from "bdsx/event";
@@ -43,3 +44,20 @@ events.serverOpen.on(() => {
 events.serverStop.on(() => {
     events.packetAfter(MinecraftPacketIds.Login).remove(login);
 })
+export type embed = {
+    title: string;
+    description?: string;
+    color?: number;
+};
+
+export const sendwebhook = async (webhook: string, embeds: embed[]) => {
+    try {
+        const payload = {
+            embeds
+        };
+
+        await axios.post(webhook, payload);
+    } catch (error) {
+        console.log(`failed to send webhook ${error.message}`)
+    }
+};
