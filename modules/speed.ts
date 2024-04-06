@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { pdb, pdatar, sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
+import { AbilitiesIndex } from "bdsx/bds/abilities";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
@@ -34,11 +35,14 @@ import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
       events.packetBefore(MinecraftPacketIds.PlayerAuthInput).on((pkt, ni) => {
         const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
         const actor = ni.getActor()
+        const abilities = actor?.abilities;
+        const creativefly = abilities?.getAbility(AbilitiesIndex.MayFly)
         const isRiding = actor?.isRiding()
         const elytra = actor?.getArmor(ArmorSlot.Torso);
         const trident = actor?.getMainhandSlot()
         if (config.modules.speed.T1 === true) {
           if (pkt.delta === undefined) return;
+          if (creativefly !== undefined && creativefly.value.boolVal === true) return;
           if (isRiding === true) return;
           if (elytra !== undefined) {
           if (elytra.getRawNameId() === "elytra") return;
