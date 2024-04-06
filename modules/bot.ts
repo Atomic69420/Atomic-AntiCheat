@@ -1,7 +1,9 @@
-import * as fs from 'fs';
+import * as fs from "fs";
+import { pdb, pdatar } from "../index.ts";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
+import { CANCEL } from "bdsx/common";
 export function detectBots() {
     console.log('[Atomic-AntiCheat] Loaded Bot Detections')
     interface botconfig {
@@ -11,6 +13,7 @@ export function detectBots() {
             [key: string]: boolean;
             T1?: boolean;
             T2?: boolean;
+            T3?: boolean
           };
         };
       }
@@ -35,6 +38,20 @@ export function detectBots() {
               console.log(`[Atomic-AntiCheat]\nPlayer ${username} was kicked for Suspected Bot [T2] This means the player is a bot`)
           }
       }
+    }
+  }
+  events.packetBefore(MinecraftPacketIds.SubClientLogin), (pkt, ni) => {
+    const pdata: pdatar | undefined = pdb.get(ni);
+     if (config.modules.bot.T3 === true) {
+      if (pdata) {
+      bedrockServer.serverInstance.disconnectClient(ni, `[Atomic-AntiCheat]\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
+      console.log(`[Atomic-AntiCheat]\nPlayer ${pdata.username} was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`)
+      return CANCEL;
+     }
+    } else {
+      bedrockServer.serverInstance.disconnectClient(ni, `[Atomic-AntiCheat]\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
+      console.log(`[Atomic-AntiCheat]\A player was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`)
+      return CANCEL;
     }
   }
 }
