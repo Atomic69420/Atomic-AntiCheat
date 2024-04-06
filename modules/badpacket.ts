@@ -22,6 +22,10 @@ import { serverProperties } from "bdsx/serverproperties";
             [key: string]: boolean;
             T1?: boolean;
           }
+          speed: {
+            [key: string]: boolean;
+            T1?: boolean;
+          }
         };
       }
       const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
