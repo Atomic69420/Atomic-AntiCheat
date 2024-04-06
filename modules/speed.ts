@@ -7,7 +7,7 @@ import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
 import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
 
-    console.log('[Atomic-AntiCheat] Loaded Bot Detections')
+    console.log('[Atomic-AntiCheat] Loaded Speed Detections')
     interface botconfig {
       discord: string;
       prefix: string;
