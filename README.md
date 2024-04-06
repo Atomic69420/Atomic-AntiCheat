@@ -6,7 +6,12 @@ Please read the license file which contains a Creative Commons CC BY-NC-ND 4.0 l
 
 
 
+## How To Use
+When first using this anticheat it is advised you edit the config.json to add webhooks so you can better view hackers trying to attack your bdsx server from discord and since this is a very customizable anticheat we offer to change the prefix for the kick message which will appear when hackers get kicked it is set to [Atomic-AntiCheat] as default. Also change the discord field within the config to your discord link or discord invite code if you do have a discord server that is related to your bdsx server otherwise it will appear in the kick message as None. The modules section of the config allows you to toggle detections by turning them on by setting the value to true and turning them off by setting the value to false.
+
+
 ## Detections
 - Bot [T1] (Kicks players who have their title id set to 2047319603 this is used in bedrock protocol for authentication but also used by Nintendo players.)
 - Bot [T2] (Kicks players who have their device model set to PrismarineJS this is used in bedrock protocol for login details.)
+- Bot [T3] (Kicks players who request a sub client login which is a fake player that can often cause confusion.)
 - New features and documentation soon.
