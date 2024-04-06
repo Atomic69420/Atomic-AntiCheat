@@ -30,12 +30,12 @@ export function detectBadPackets() {
         if (config.modules.badpacket.T1 === true) {
          if (pdata) {
          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Packet [T1]\nDiscord: ${config.discord}`);
-         console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is true.`)
+         console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is false.`)
          if (config.webhook !== "None") {
            const embeds: embed[] = [
              {
                  title: 'Bad Packet [T1]',
-                 description: `Kicked ${pdata.username} for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is true.`,
+                 description: `Kicked ${pdata.username} for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is false.`,
                  color: 202334,
              },
          ];
@@ -46,12 +46,12 @@ export function detectBadPackets() {
         }
        } else {
          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Packet [T1]\nDiscord: ${config.discord}`);
-         console.log(`${config.prefix}\nA player was kicked for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is true.`)
+         console.log(`${config.prefix}\nA player was kicked for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is false.`)
          if (config.webhook !== "None") {
            const embeds: embed[] = [
              {
                  title: 'Bad Packet [T1]',
-                 description: `Kicked a player for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is true.`,
+                 description: `Kicked a player for Bad Packet [T1] This means the player sent a move player packet which is only used if ServerAuthoritativeMovementMode is false.`,
                  color: 202334,
              },
          ];
