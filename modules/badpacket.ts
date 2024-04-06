@@ -32,7 +32,7 @@ import { serverProperties } from "bdsx/serverproperties";
       const config: botconfig = JSON.parse(configdata);
       if (serverProperties["server-authoritative-movement"] !== "client-auth") {
       events.packetBefore(MinecraftPacketIds.MovePlayer).on((pkt, ni) => {
-        const pdata: pdatar | undefined = pdb.get(ni);
+        const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
         if (config.modules.badpacket.T1 === true) {
          if (pdata) {
          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Packet [T1]\nDiscord: ${config.discord}`);
