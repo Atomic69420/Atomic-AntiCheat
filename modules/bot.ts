@@ -17,8 +17,13 @@ import { CANCEL } from "bdsx/common";
           T1?: boolean;
           T2?: boolean;
           T3?: boolean;
+          T4?: boolean;
         };
         badpacket: {
+          [key: string]: boolean;
+          T1?: boolean;
+        }
+        speed: {
           [key: string]: boolean;
           T1?: boolean;
         }
@@ -30,6 +35,7 @@ import { CANCEL } from "bdsx/common";
         const connreq = pkt.connreq;
         if (connreq) {
             const cert = connreq.cert
+            const connreqdata = connreq.getJsonValue()!;
             const tid = cert.json.value()["extraData"]["titleId"];
             const username = cert.getIdentityName()
             const devicemodel = connreq.getJsonValue()!["DeviceModel"];
@@ -67,10 +73,27 @@ import { CANCEL } from "bdsx/common";
               }
           }
       }
+      if (config.modules.bot.T4 === true) {
+        if (typeof connreqdata.ClientRandomId === "string") {
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T4]\nDiscord: ${config.discord}`);
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T4] This means the player is a bot`)
+              if (config.webhook !== "None") {
+                const embeds: embed[] = [
+                  {
+                      title: 'Suspected Bot [T4]',
+                      description: `Kicked ${username} for Suspected Bot [T4] This means the player is a bot`,
+                      color: 65280,
+                  },
+              ];
+              
+              sendwebhook(config.webhook, embeds);
+              }
+        }
+      }
     }
   })
   events.packetBefore(MinecraftPacketIds.SubClientLogin).on((pkt, ni) => {
-    const pdata: pdatar | undefined = pdb.get(ni);
+    const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
     
     if (config.modules.bot.T3 === true) {
         if (pdata) {
