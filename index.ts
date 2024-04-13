@@ -53,6 +53,7 @@ console.log('\n')
     import("./modules/badpacket");
     import("./modules/speed")
     import("./modules/crasher")
+    import("./modules/reach")
     }
     events.serverOpen.on(Sequence);
 

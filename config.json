@@ -10,6 +10,16 @@
         },
         "badpacket": {
             "T1": true
+        },
+        "speed": {
+            "T1": true
+        },
+        "crasher": {
+            "T1": true,
+            "T2": true
+        },
+        "reach": {
+            "T1": true
         }
     }
 }
