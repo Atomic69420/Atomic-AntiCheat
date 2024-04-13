@@ -20,3 +20,6 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Bad Packet [T1] (Kicks players who send a move player packet this is only used when ServerAuthoritativeMovementMode is false and is used in hack clients for some movement hacks.)
 ### Speed Detections
 - Speed [T1] (Kicks players who are going to fast such has 0.5 which is fast according to the servers calculations although if ServerAuthoritativeMovementMode is false this check will not be implemented.)
+### Crasher Detections
+- Crasher [T1] (Kicks players who attempt to send a /me, /tell, /w or /msg command which can have a @e in it causing for a large message or unexpected behavior from the server.)
+- Crasher [T2] (Kicks players who send more than or 20 messages in 1 second since sending alot of messages can freeze the server but this detection can not stop it from freezing.)
