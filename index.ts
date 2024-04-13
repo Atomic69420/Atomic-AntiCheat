@@ -51,6 +51,8 @@ console.log('\n')
     console.log('Successfully Started Loading Sequence!')
     import("./modules/bot");
     import("./modules/badpacket");
+    import("./modules/speed")
+    import("./modules/crasher")
     }
     events.serverOpen.on(Sequence);
 
