@@ -37,7 +37,18 @@ const login = (pkt: LoginPacket, ni: NetworkIdentifier) => {
 }
 events.packetAfter(MinecraftPacketIds.Login).on(login);
 function Sequence(): void {
-    console.log('[Atomic-AntiCheat] Successfully Started Loading Sequence!')
+    console.log('\n')
+    console.log(`  ___  _                  _         ___  _____ 
+ / _ \\| |                (_)       / _ \\/  __ \\
+/ /_\\ | |_ ___  _ __ ___  _  ___  / /_\\ | /  \\/
+|  _  | __/ _ \\| '_ \` _ \\| |/ __| |  _  | |    
+| | | | || (_) | | | | | | | (__  | | | | \\__/\\
+\\_| |_|\\__\\___/|_| |_| |_|_|\\___| \\_| |_|\\____/
+                                              
+                                              
+`);
+console.log('\n')
+    console.log('Successfully Started Loading Sequence!')
     import("./modules/bot");
     import("./modules/badpacket");
     }
