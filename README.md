@@ -11,6 +11,11 @@ When first using this anticheat it is advised you edit the config.json to add we
 
 
 ## Detections
+- [x] Bots
+- [x] Bad Packets
+- [x] Speed Hacks
+- [x] Crasher
+- [x] Reach
 ### Bot Detections
 - Bot [T1] (Kicks players who have their title id set to 2047319603 this is used in bedrock protocol for authentication but also used by Nintendo players.)
 - Bot [T2] (Kicks players who have their device model set to PrismarineJS this is used in bedrock protocol for login details.)
