@@ -27,6 +27,7 @@
         },
         "nofall": {
             "T1": true
-        }
+        },
+        "seedhider": false
     }
 }
