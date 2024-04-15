@@ -49,7 +49,7 @@ import { CANCEL } from "bdsx/common";
         const dx = event.source.getPosition().x - event.target.getPosition().x;
         const dz = event.source.getPosition().z - event.target.getPosition().z
 const distance = Math.sqrt(dx * dx + dz * dz);
-if (4 <= distance) {
+if (distance >= 4.9) {
     if (config.modules.reach.T1 === true) {
         if (pdata) {
         bedrockServer.serverInstance.disconnectClient(event.source.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
