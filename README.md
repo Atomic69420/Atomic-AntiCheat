@@ -15,6 +15,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [ ] Punishment options
 - [ ] Whitelist for individual modules
 - [ ] Lockdown system
+- [ ] Seed hider
 ## Detections
 ### Combat
 - [x] Reach
@@ -27,7 +28,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [x] Crasher
 - [x] Invisible Skins
 - [ ] Device Blocking
-- [ ] NoFall
+- [x] NoFall
 - [ ] .xp
 - [ ] VPNs/Proxies
 ### Bot Detections
@@ -47,3 +48,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 ### Invisible Skin Detections
 - Bad Skin [T1] (Kicks players who try to join with a invisible skin equipped.)
 - Bad Skin [T2] (Kicks players who try to change to a invisible skin while ingame.)
+### NoFall Detections
+- NoFall [T1] (Kicks players who respawn when they are not dead which is the method used in NoFall for horion.)
