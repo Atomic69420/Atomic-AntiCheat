@@ -89,7 +89,6 @@ import { CANCEL } from "bdsx/common";
         }
       })
       events.packetBefore(MinecraftPacketIds.Text).on((pkt, ni) => {
-        const ip = ni.getAddress().split("|")[0];
       if (config.modules.crasher.T2 === true) mtps++;
        if (mtps === 20) {
         const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
