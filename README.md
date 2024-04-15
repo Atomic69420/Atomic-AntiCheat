@@ -20,7 +20,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [x] Bots
 - [x] Bad Packets
 - [x] Crasher
-- [ ] Invisible Skins
+- [x] Invisible Skins
 - [ ] Device Blocking
 - [ ] NoFall
 ### Bot Detections
@@ -37,3 +37,6 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Crasher [T2] (Kicks players who send more than or 20 messages in 1 second since sending alot of messages can freeze the server but this detection can not stop it from freezing.)
 ### Reach Detections
 - Reach [T1] (Kicks players who hit a entity from or more than 4 blocks away.)
+### Invisible Skin Detections
+- Bad Skin [T1] (Kicks players who try to join with a invisible skin equipped.)
+- Bad Skin [T2] (Kicks players who try to change to a invisible skin while ingame.)
