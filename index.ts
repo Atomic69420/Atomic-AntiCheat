@@ -54,6 +54,7 @@ console.log('\n')
     import("./modules/speed")
     import("./modules/crasher")
     import("./modules/reach")
+    import("./modules/badskin")
     }
     events.serverOpen.on(Sequence);
 

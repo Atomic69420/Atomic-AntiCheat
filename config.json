@@ -20,6 +20,10 @@
         },
         "reach": {
             "T1": true
+        },
+        "badskin": {
+            "T1": true,
+            "T2": true
         }
     }
 }
