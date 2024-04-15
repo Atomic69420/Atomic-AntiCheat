@@ -7,7 +7,7 @@ import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
 import { serverProperties } from "bdsx/serverproperties";
     console.log('[Atomic-AntiCheat] Loaded Bad Packet Detections')
-    interface botconfig {
+    interface acconfig {
         discord: string;
         prefix: string;
         webhook: string;
@@ -29,7 +29,7 @@ import { serverProperties } from "bdsx/serverproperties";
         };
       }
       const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
-      const config: botconfig = JSON.parse(configdata);
+      const config: acconfig = JSON.parse(configdata);
       if (serverProperties["server-authoritative-movement"] !== "client-auth") {
       events.packetBefore(MinecraftPacketIds.MovePlayer).on((pkt, ni) => {
         const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);

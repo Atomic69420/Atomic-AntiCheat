@@ -7,7 +7,7 @@ import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
 
     console.log('[Atomic-AntiCheat] Loaded Crasher Detections')
-    interface botconfig {
+    interface acconfig {
       discord: string;
       prefix: string;
       webhook: string;
@@ -35,7 +35,7 @@ import { CANCEL } from "bdsx/common";
       };
     }
     const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
-    const config: botconfig = JSON.parse(configdata);
+    const config: acconfig = JSON.parse(configdata);
     let mtps: number = 0
     if (config.modules.crasher.T2 === true) {
     setInterval(() => {

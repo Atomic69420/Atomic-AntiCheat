@@ -9,7 +9,7 @@ import { CANCEL } from "bdsx/common";
 import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
 
     console.log('[Atomic-AntiCheat] Loaded Speed Detections')
-    interface botconfig {
+    interface acconfig {
       discord: string;
       prefix: string;
       webhook: string;
@@ -31,7 +31,7 @@ import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
       };
     }
     const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
-      const config: botconfig = JSON.parse(configdata);
+      const config: acconfig = JSON.parse(configdata);
       events.packetBefore(MinecraftPacketIds.PlayerAuthInput).on((pkt, ni) => {
         const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
         const actor = ni.getActor()
