@@ -43,7 +43,9 @@ import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
         if (config.modules.speed.T1 === true) {
           if (pkt.delta === undefined) return;
           if (creativefly !== undefined && creativefly.value.boolVal === true) return;
+          if (actor?.isCreative() !== undefined && actor.isCreative() === true) return;
           if (isRiding === true) return;
+          if (actor?.getLastHurtByMobTime() !== undefined && actor?.getLastHurtByMobTime() !== 0) return;
           if (elytra !== undefined) {
           if (elytra.getRawNameId() === "elytra") return;
           }

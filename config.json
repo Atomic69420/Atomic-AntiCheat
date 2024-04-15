@@ -24,6 +24,9 @@
         "badskin": {
             "T1": true,
             "T2": true
+        },
+        "nofall": {
+            "T1": true
         }
     }
 }
