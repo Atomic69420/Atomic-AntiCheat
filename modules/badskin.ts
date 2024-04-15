@@ -6,7 +6,7 @@ import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
 
-    console.log('[Atomic-AntiCheat] Loaded Reach Detections')
+    console.log('[Atomic-AntiCheat] Loaded Bad Skin Detections')
     interface acconfig {
       discord: string;
       prefix: string;
