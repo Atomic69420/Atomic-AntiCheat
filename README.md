@@ -15,7 +15,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [ ] Punishment options
 - [ ] Whitelist for individual modules
 - [ ] Lockdown system
-- [ ] Seed hider
+- [x] Seed hider (not recommended)
 ## Detections
 ### Combat
 - [x] Reach
