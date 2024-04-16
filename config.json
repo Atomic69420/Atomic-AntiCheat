@@ -6,7 +6,8 @@
         "bot": {
             "T1": true,
             "T2": true,
-            "T3": true
+            "T3": true,
+            "T4": true
         },
         "badpacket": {
             "T1": true,
