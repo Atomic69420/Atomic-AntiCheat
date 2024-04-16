@@ -6,11 +6,11 @@
         "bot": {
             "T1": true,
             "T2": true,
-            "T3": true,
-            "T4": true
+            "T3": true
         },
         "badpacket": {
-            "T1": true
+            "T1": true,
+            "T2": true
         },
         "speed": {
             "T1": true
