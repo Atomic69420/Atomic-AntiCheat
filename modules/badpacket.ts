@@ -21,6 +21,7 @@ import { serverProperties } from "bdsx/serverproperties";
           badpacket: {
             [key: string]: boolean;
             T1?: boolean;
+            T2?: boolean;
           }
           speed: {
             [key: string]: boolean;
@@ -30,6 +31,43 @@ import { serverProperties } from "bdsx/serverproperties";
       }
       const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
       const config: acconfig = JSON.parse(configdata);
+      events.packetBefore(MinecraftPacketIds.EntityEvent).on((pkt, ni) => {
+        if (config.modules.badpacket.T2 === false) return;
+      if (pkt.event === 34) {
+        const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
+        if (pdata) {
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Packet [T2]\nDiscord: ${config.discord}`);
+         console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Bad Packet [T2] This means the player sent a EntityEvent packet trying to get xp.`)
+         if (config.webhook !== "None") {
+           const embeds: embed[] = [
+             {
+                 title: 'Bad Packet [T2]',
+                 description: `Kicked ${pdata.username} for Bad Packet [T1] This means the player sent a EntityEvent packet trying to get xp.`,
+                 color: 65280,
+             },
+         ];
+         
+         sendwebhook(config.webhook, embeds);
+        }
+        return CANCEL;
+        } else {
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Packet [T2]\nDiscord: ${config.discord}`);
+          console.log(`${config.prefix}\nA player was kicked for Bad Packet [T2] This means the player sent a EntityEvent packet trying to get xp..`)
+          if (config.webhook !== "None") {
+            const embeds: embed[] = [
+              {
+                  title: 'Bad Packet [T2]',
+                  description: `Kicked a player for Bad Packet [T2] This means the player sent a EntityEvent packet trying to get xp.`,
+                  color: 65280,
+              },
+          ];
+          
+          sendwebhook(config.webhook, embeds);
+          }
+          return CANCEL;
+        }
+      }
+    })
       if (serverProperties["server-authoritative-movement"] !== "client-auth") {
       events.packetBefore(MinecraftPacketIds.MovePlayer).on((pkt, ni) => {
         const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
