@@ -55,6 +55,7 @@ console.log('\n')
     import("./modules/crasher")
     import("./modules/reach")
     import("./modules/badskin")
+    import("./modules/nofall")
     }
     events.serverOpen.on(Sequence);
 
