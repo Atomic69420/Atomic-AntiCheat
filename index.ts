@@ -14,7 +14,7 @@ export type pdatar = {
     deviceid: string;
 };
 
-export const pdb = new Map<NetworkIdentifier, pdatar>();
+export const pdb = new Map<string, pdatar>();
 
 const login = (pkt: LoginPacket, ni: NetworkIdentifier) => {
     const connreq = pkt.connreq;
@@ -32,7 +32,7 @@ const login = (pkt: LoginPacket, ni: NetworkIdentifier) => {
             deviceid: connreq.getDeviceId()
 
         };
-        pdb.set(ni, pdata);
+        pdb.set(ni.toString().split(":")[0], pdata);
     }
 }
 events.packetAfter(MinecraftPacketIds.Login).on(login);
@@ -56,6 +56,7 @@ console.log('\n')
     import("./modules/reach")
     import("./modules/badskin")
     import("./modules/nofall")
+    import("./modules/seedhide")
     }
     events.serverOpen.on(Sequence);
 
