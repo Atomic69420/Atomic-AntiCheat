@@ -18,6 +18,7 @@ import { CANCEL } from "bdsx/common";
           T2?: boolean;
           T3?: boolean;
           T4?: boolean;
+          T5?: boolean;
         };
         badpacket: {
           [key: string]: boolean;
@@ -132,4 +133,45 @@ import { CANCEL } from "bdsx/common";
             return CANCEL;
         }
     }
+});
+events.packetBefore(MinecraftPacketIds.TickSync).on((pkt, ni) => {
+  const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
+    
+  if (config.modules.bot.T5 === true) {
+      if (pdata) {
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T5]\nDiscord: ${config.discord}`);
+          console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`);
+          
+          if (config.webhook !== "None") {
+              const embeds: embed[] = [
+                  {
+                      title: 'Suspected Bot [T5]',
+                      description: `Kicked ${pdata.username} for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`,
+                      color: 65280,
+                  },
+              ];
+              
+              sendwebhook(config.webhook, embeds);
+          }
+          
+          return CANCEL;
+      } else {
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T5]\nDiscord: ${config.discord}`);
+          console.log(`${config.prefix}\nA player was kicked for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`);
+          
+          if (config.webhook !== "None") {
+              const embeds: embed[] = [
+                  {
+                      title: 'Suspected Bot [T5]',
+                      description: `Kicked a player for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`,
+                      color: 65280,
+                  },
+              ];
+              
+              sendwebhook(config.webhook, embeds);
+          }
+          
+          return CANCEL;
+      }
+  }
 });
