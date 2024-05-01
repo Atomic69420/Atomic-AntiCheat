@@ -30,7 +30,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [ ] Device Blocking
 - [x] NoFall
 - [x] .xp
-- [ ] VPNs/Proxies
+- [x] VPNs/Proxies
 - [ ] Alt Detection
 ### Bot Detections
 - Bot [T1] (Kicks players who have their title id set to 2047319603 this is used in bedrock protocol for authentication but also used by Nintendo players.)
@@ -53,3 +53,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Bad Skin [T2] (Kicks players who try to change to a invisible skin while ingame.)
 ### NoFall Detections
 - NoFall [T1] (Kicks players who respawn when they are not dead which is the method used in NoFall for horion.)
+### VPN/Proxy Detections
+- Anti VPN [T1] (Kicks players who are using a proxy or VPN.)
