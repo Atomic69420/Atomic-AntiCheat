@@ -57,6 +57,7 @@ console.log('\n')
     import("./modules/badskin")
     import("./modules/nofall")
     import("./modules/seedhide")
+    import("./modules/antivpn")
     }
     events.serverOpen.on(Sequence);
 
