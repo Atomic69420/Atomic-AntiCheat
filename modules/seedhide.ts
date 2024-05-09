@@ -1,10 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { pdb, pdatar, sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
-import { bedrockServer } from "bdsx/launcher";
-import { CANCEL } from "bdsx/common";
 import { serverProperties } from "bdsx/serverproperties";
     console.log('[Atomic-AntiCheat] Loaded Seed Hider')
     interface acconfig {

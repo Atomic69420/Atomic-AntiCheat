@@ -1,11 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as http from 'http'
-import { pdb, pdatar, sendwebhook, embed } from "../index";
+import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
-import { CANCEL } from "bdsx/common";
 
     console.log('[Atomic-AntiCheat] Loaded VPN/Proxy Detections')
     interface acconfig {
