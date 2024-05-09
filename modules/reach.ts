@@ -4,6 +4,7 @@ import { pdb, pdatar, sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
+import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
 
     console.log('[Atomic-AntiCheat] Loaded Reach Detections')
     interface acconfig {
@@ -44,12 +45,16 @@ import { CANCEL } from "bdsx/common";
    if (event.source.isPlayer() === false) return;
    if (event.source.isMob() === false) return;
    if (event.target.getEntityTypeId() === 2854) return;
+   const item = event.source.getNetworkIdentifier()?.getActor()?.getMainhandSlot()
             const pdata: pdatar | undefined = pdb.get(event.source.getNetworkIdentifier().toString().split(":")[0]);
         const dx = event.source.getPosition().x - event.target.getPosition().x;
         const dz = event.source.getPosition().z - event.target.getPosition().z
 const distance = Math.sqrt(dx * dx + dz * dz);
 if (distance >= 4.9) {
     if (config.modules.reach.T1 === true) {
+      if (item !== undefined) {
+        if (EnchantUtils.getEnchantLevel(Enchant.Type.WeaponKnockback, item) > 0) return;
+      }
         if (pdata) {
         bedrockServer.serverInstance.disconnectClient(event.source.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
                     console.log(`${config.prefix}\n${pdata.username} was kicked for Reach [T1] This means the player hit a entity from or more than 4 blocks away.`);
