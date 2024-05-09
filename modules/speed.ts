@@ -6,7 +6,8 @@ import { AbilitiesIndex } from "bdsx/bds/abilities";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
-import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
+import { ArmorSlot } from "bdsx/bds/inventory";
+import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
 
     console.log('[Atomic-AntiCheat] Loaded Speed Detections')
     interface acconfig {
@@ -50,7 +51,7 @@ import { ArmorSlot, HandSlot } from "bdsx/bds/inventory";
           if (elytra.getRawNameId() === "elytra") return;
           }
           if (trident !== undefined) {
-            if (trident.getRawNameId() === "trident") return;
+            if (trident.getRawNameId() === "trident" && EnchantUtils.getEnchantLevel(Enchant.Type.TridentRiptide, trident) > 0) return;
             }
           if (Math.abs(pkt.delta.x) > 0.5 || Math.abs(pkt.delta.z) > 0.5) {
             if (pdata) {
