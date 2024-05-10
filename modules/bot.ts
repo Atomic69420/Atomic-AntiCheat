@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { pdb, pdatar, sendwebhook, embed } from "../index";
+import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
@@ -94,18 +94,18 @@ import { CANCEL } from "bdsx/common";
     }
   })
   events.packetBefore(MinecraftPacketIds.SubClientLogin).on((pkt, ni) => {
-    const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
+    const username = ni.getActor()?.getName()
     
     if (config.modules.bot.T3 === true) {
-        if (pdata) {
+        if (username) {
             bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
-            console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`);
+            console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`);
             
             if (config.webhook !== "None") {
                 const embeds: embed[] = [
                     {
                         title: 'Suspected Bot [T3]',
-                        description: `Kicked ${pdata.username} for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`,
+                        description: `Kicked ${username} for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`,
                         color: 65280,
                     },
                 ];
@@ -135,18 +135,18 @@ import { CANCEL } from "bdsx/common";
     }
 });
 events.packetBefore(MinecraftPacketIds.TickSync).on((pkt, ni) => {
-  const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
+    const username = ni.getActor()?.getName()
     
   if (config.modules.bot.T5 === true) {
-      if (pdata) {
+      if (username) {
           bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T5]\nDiscord: ${config.discord}`);
-          console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`);
+          console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`);
           
           if (config.webhook !== "None") {
               const embeds: embed[] = [
                   {
                       title: 'Suspected Bot [T5]',
-                      description: `Kicked ${pdata.username} for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`,
+                      description: `Kicked ${username} for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`,
                       color: 65280,
                   },
               ];

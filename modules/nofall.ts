@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { pdb, pdatar, sendwebhook, embed } from "../index";
+import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
@@ -55,20 +55,20 @@ import { CANCEL } from "bdsx/common";
     const config: acconfig = JSON.parse(configdata);
     events.packetBefore(MinecraftPacketIds.PlayerAction).on((pkt, ni) => {
         if (config.modules.nofall.T1 === false) return;
-        const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
+        const username = ni.getActor()?.getName()
         if (pkt.action === 7) {
         rps++
         }
         if (rps >= 3) {
-            if (pdata) {
+            if (username) {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T1]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`);
+                    console.log(`${config.prefix}\nPlayer ${username} was kicked for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`);
                     
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'NoFall [T1]',
-                                description: `Kicked ${pdata.username} for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`,
+                                description: `Kicked ${username} for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`,
                                 color: 65280,
                             },
                         ];

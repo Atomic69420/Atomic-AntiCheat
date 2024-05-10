@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { pdb, pdatar, sendwebhook, embed } from "../index";
+import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
@@ -73,16 +73,16 @@ import { CANCEL } from "bdsx/common";
     events.packetBefore(MinecraftPacketIds.PlayerSkin).on((pkt, ni) => {
         if (config.modules.badskin.T2 === false) return;
         if (pkt.skin.resourcePatch.includes(' "default" : "geometry.humanoid"\n')) {
-            const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
-            if (pdata) {
+          const username = ni.getActor()?.getName()
+            if (username) {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Skin [T2]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Bad Skin [T2] This means the player changed their skin to a invisible skin.`);
+                    console.log(`${config.prefix}\nPlayer ${username} was kicked for Bad Skin [T2] This means the player changed their skin to a invisible skin.`);
                     
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'Bad Skin [T2]',
-                                description: `Kicked ${pdata.username} for Bad Skin [T2] This means the player changed their skin to a invisible skin.`,
+                                description: `Kicked ${username} for Bad Skin [T2] This means the player changed their skin to a invisible skin.`,
                                 color: 65280,
                             },
                         ];

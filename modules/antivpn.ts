@@ -5,6 +5,7 @@ import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
+import { CANCEL } from "bdsx/common";
 
     console.log('[Atomic-AntiCheat] Loaded VPN/Proxy Detections')
     interface acconfig {
@@ -100,6 +101,7 @@ import { bedrockServer } from "bdsx/launcher";
                 
                 sendwebhook(config.webhook, embeds);
                 }
+                return CANCEL;
             }
             }
         })

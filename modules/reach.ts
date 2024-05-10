@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { pdb, pdatar, sendwebhook, embed } from "../index";
+import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { bedrockServer } from "bdsx/launcher";
 import { CANCEL } from "bdsx/common";
@@ -45,8 +45,8 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
    if (event.source.isPlayer() === false) return;
    if (event.source.isMob() === false) return;
    if (event.target.getEntityTypeId() === 2854) return;
-   const item = event.source.getNetworkIdentifier()?.getActor()?.getMainhandSlot()
-            const pdata: pdatar | undefined = pdb.get(event.source.getNetworkIdentifier().toString().split(":")[0]);
+   const item = event.source.getNetworkIdentifier()?.getActor()?.getMainhandSlot()  
+   const username = event.source.getNetworkIdentifier()?.getActor()?.getName()
         const dx = event.source.getPosition().x - event.target.getPosition().x;
         const dz = event.source.getPosition().z - event.target.getPosition().z
 const distance = Math.sqrt(dx * dx + dz * dz);
@@ -55,15 +55,15 @@ if (distance >= 4.9) {
       if (item !== undefined) {
         if (EnchantUtils.getEnchantLevel(Enchant.Type.WeaponKnockback, item) > 0) return;
       }
-        if (pdata) {
+        if (username) {
         bedrockServer.serverInstance.disconnectClient(event.source.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\n${pdata.username} was kicked for Reach [T1] This means the player hit a entity from or more than 4 blocks away.`);
+                    console.log(`${config.prefix}\n${username} was kicked for Reach [T1] This means the player hit a entity from or more than 4 blocks away.`);
                     
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'Reach [T1]',
-                                description: `Kicked ${pdata.username} for Reach [T1] This means the player hit a entity from or more than 4 blocks away.`,
+                                description: `Kicked ${username} for Reach [T1] This means the player hit a entity from or more than 4 blocks away.`,
                                 color: 65280,
                             },
                         ];

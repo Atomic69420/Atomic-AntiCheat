@@ -1,13 +1,13 @@
 import * as fs from "fs";
 import * as path from "path";
-import { pdb, pdatar, sendwebhook, embed } from "../index";
+import { sendwebhook, embed } from "../index";
 import { events } from "bdsx/event";
 import { AbilitiesIndex } from "bdsx/bds/abilities";
 import { MinecraftPacketIds } from "bdsx/bds/packetids";
 import { bedrockServer } from "bdsx/launcher";
-import { CANCEL } from "bdsx/common";
 import { ArmorSlot } from "bdsx/bds/inventory";
 import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
+import { CANCEL } from "bdsx/common";
 
     console.log('[Atomic-AntiCheat] Loaded Speed Detections')
     interface acconfig {
@@ -34,7 +34,7 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
     const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
       const config: acconfig = JSON.parse(configdata);
       events.packetBefore(MinecraftPacketIds.PlayerAuthInput).on((pkt, ni) => {
-        const pdata: pdatar | undefined = pdb.get(ni.toString().split(":")[0]);
+        const username = ni.getActor()?.getName()
         const actor = ni.getActor()
         const abilities = actor?.abilities;
         const creativefly = abilities?.getAbility(AbilitiesIndex.MayFly)
@@ -54,22 +54,21 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
             if (trident.getRawNameId() === "trident" && EnchantUtils.getEnchantLevel(Enchant.Type.TridentRiptide, trident) > 0) return;
             }
           if (Math.abs(pkt.delta.x) > 0.5 || Math.abs(pkt.delta.z) > 0.5) {
-            if (pdata) {
+            if (username) {
               bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Speed [T1]\nDiscord: ${config.discord}`);
-              console.log(`${config.prefix}\nPlayer ${pdata.username} was kicked for Speed [T1] This means the player was moving too fast`);
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Speed [T1] This means the player was moving too fast`);
               
               if (config.webhook !== "None") {
                   const embeds: embed[] = [
                       {
                           title: 'Speed [T1]',
-                          description: `Kicked ${pdata.username} for Speed [T1] This means the player was moving too fast`,
+                          description: `Kicked ${username} for Speed [T1] This means the player was moving too fast`,
                           color: 65280,
                       },
                   ];
                   
                   sendwebhook(config.webhook, embeds);
               }
-              
               return CANCEL;
           } else {
               bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Speed [T1]\nDiscord: ${config.discord}`);
@@ -86,7 +85,6 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
                   
                   sendwebhook(config.webhook, embeds);
               }
-              
               return CANCEL;
           }
         }
