@@ -9,6 +9,12 @@ Please read the license file which contains a Creative Commons CC BY-NC-ND 4.0 l
 ## How To Use
 When first using this anticheat it is advised you edit the config.json to add webhooks so you can better view hackers trying to attack your bdsx server from discord and since this is a very customizable anticheat we offer to change the prefix for the kick message which will appear when hackers get kicked it is set to [Atomic-AntiCheat] as default. Also change the discord field within the config to your discord link or discord invite code if you do have a discord server that is related to your bdsx server otherwise it will appear in the kick message as None. The modules section of the config allows you to toggle detections by turning them on by setting the value to true and turning them off by setting the value to false.
 
+## Config
+- discord: your discord link, will be displayed in kick messages.
+- prefix: the kick title in kick messages.
+- webhook: your discord webhook link, useful for seeing what Atomic-AntiCheat has been detecting from your discord.
+- mongodburl: your mongodburl link, required to use this anticheat you can get this by creating a database on mongodb.com or downloading mongodb and using mongodb://localhost:27017/anticheat as the url. I advise watching a youtube tutorial for further information.
+- modules: a list of modules to enable or disable modules are documented below.
 ## Features
 - [x] Discord webhook support
 - [x] Customizable
