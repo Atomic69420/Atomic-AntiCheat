@@ -48,8 +48,8 @@ const pdataSchema = new mongoose.Schema({
     uuid: String,
     tid: Number,
     deviceos: Number,
+    deviceid: String,
     devicemodel: String,
-    deviceid: String
 });
 
 export const PData = mongoose.model("PData", pdataSchema);
@@ -60,30 +60,37 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
         const cert = connreq.getCertificate();
         const connreqdata = connreq.getJsonValue()!;
         if (cert && cert.getIdentityName() && cert.getXuid() && cert.getIdentityString()) {
-            const tid = cert.json.value()["extraData"]["titleId"]
-            const pdatar = await PData.findOne({ xuid: cert.getXuid() });
+            const tid = cert.json.value()["extraData"]["titleId"];
+            const deviceid = connreq.getDeviceId();
+            const certUsername = cert.getIdentityName();
+            const certXuid = cert.getXuid();
+            const certUuid = cert.getIdentityString();
+            const certDeviceModel = connreqdata["DeviceModel"];
+            const certDeviceOS = connreqdata["DeviceOS"];
+
+            const pdatar = await PData.findOne({ xuid: certXuid });
 
             if (!pdatar) {
                 const pdata = new PData({
                     ip: ni.getAddress(),
-                    username: cert.getIdentityName(),
-                    xuid: cert.getXuid(),
-                    uuid: cert.getIdentityString(),
+                    username: certUsername,
+                    xuid: certXuid,
+                    uuid: certUuid,
                     tid: tid,
-                    deviceos: connreqdata["DeviceOS"],
-                    devicemodel: connreqdata["DeviceModel"],
-                    deviceid: connreq.getDeviceId()
+                    deviceos: certDeviceOS,
+                    devicemodel: certDeviceModel,
+                    deviceid: deviceid,
                 });
                 await pdata.save();
             } else {
-                if (pdatar.devicemodel === connreqdata["DeviceModel"] && pdatar.deviceid !== connreq.getDeviceId()) {
+                if (pdatar.deviceid !== "null" && pdatar.devicemodel === certDeviceModel && pdatar.deviceid !== deviceid) {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Device ID Spoof [T1]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nPlayer ${cert.getIdentityName()} was kicked for Device ID Spoof [T1] This means the player is using a device id spoofer.`);
+                    console.log(`${config.prefix}\nPlayer ${certUsername} was kicked for Device ID Spoof [T1] This means the player is using a device id spoofer.`);
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'Device ID Spoof [T1]',
-                                description: `Kicked ${cert.getIdentityName()} for Device ID Spoof [T1] This means the player is using a device id spoofer.`,
+                                description: `Kicked ${certUsername} for Device ID Spoof [T1] This means the player is using a device id spoofer.`,
                                 color: 65280,
                             },
                         ];
@@ -91,14 +98,14 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
                     }
                     return;
                 }
-                if (pdatar.tid === Number(tid) && pdatar.deviceos !== connreqdata["DeviceOS"] && config.modules.devicespoof.T1 === true) {
+                if (pdatar.tid === Number(tid) && pdatar.deviceos !== certDeviceOS && config.modules.devicespoof.T1 === true) {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Device Spoof [T1]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nPlayer ${cert.getIdentityName()} was kicked for Device Spoof [T1] This means the player is using a device spoofer.`);
+                    console.log(`${config.prefix}\nPlayer ${certUsername} was kicked for Device Spoof [T1] This means the player is using a device spoofer.`);
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'Device Spoof [T1]',
-                                description: `Kicked ${cert.getIdentityName()} for Device Spoof [T1] This means the player is using a device spoofer.`,
+                                description: `Kicked ${certUsername} for Device Spoof [T1] This means the player is using a device spoofer.`,
                                 color: 65280,
                             },
                         ];
@@ -106,13 +113,13 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
                     }
                     return;
                 }
-                pdatar.username = cert.getIdentityName();
-                pdatar.xuid = cert.getXuid();
-                pdatar.uuid = cert.getIdentityString();
+                pdatar.username = certUsername;
+                pdatar.xuid = certXuid;
+                pdatar.uuid = certUuid;
                 pdatar.tid = tid;
-                pdatar.deviceos = connreqdata["DeviceOS"];
-                pdatar.devicemodel = connreqdata["DeviceModel"];
-                pdatar.deviceid = connreq.getDeviceId();
+                pdatar.deviceos = certDeviceOS;
+                pdatar.deviceid = deviceid;
+                pdatar.devicemodel = certDeviceModel;
                 await pdatar.save();
             }
         } else {
