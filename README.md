@@ -65,3 +65,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Anti VPN [T1] (Kicks players who are using a proxy or VPN.)
 ### Device ID Spoof Detections
 - Device ID Spoof [T1] (Kicks players who are on the same device but have a different device id.)
+### Device Spoof Detections
+- Device Spoof [T1] (Kicks players who are on the same device but have a different device os.)
