@@ -32,6 +32,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [x] .xp
 - [x] VPNs/Proxies
 - [ ] Alt Detection
+- [x] Device ID Spoof
 ### Bot Detections
 - Bot [T1] (Kicks players who have their title id set to 2047319603 this is used in bedrock protocol for authentication but also used by Nintendo players.)
 - Bot [T2] (Kicks players who have their device model set to PrismarineJS this is used in bedrock protocol for login details.)
@@ -55,3 +56,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 - NoFall [T1] (Kicks players who respawn when they are not dead which is the method used in NoFall for horion.)
 ### VPN/Proxy Detections
 - Anti VPN [T1] (Kicks players who are using a proxy or VPN.)
+### Device ID Spoof Detections
+- Device ID Spoof [T1] (Kicks players who are on the same device but have a different device id.)
