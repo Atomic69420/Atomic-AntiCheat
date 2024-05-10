@@ -11,6 +11,7 @@
 	  "bdsx": "file:../bdsx"
 	},
 	"dependencies": {
-		"axios": "^1.6.4"
+		"axios": "^1.6.4",
+		"mongoose": "^5.13.22"
 	  }
   }
