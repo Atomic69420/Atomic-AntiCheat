@@ -32,7 +32,11 @@ import * as mongoose from "mongoose";
         deviceidspoof: {
           [key: string]: boolean;
           T1?: boolean;
-        }
+        },
+        devicespoof: {
+            [key: string]: boolean;
+            T1?: boolean;
+          }
       };
     }
     const configdata = fs.readFileSync(path.join(__dirname, "./config.json"), 'utf8');
@@ -55,8 +59,8 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
     if (connreq) {
         const cert = connreq.getCertificate();
         const connreqdata = connreq.getJsonValue()!;
-
         if (cert && cert.getIdentityName() && cert.getXuid() && cert.getIdentityString()) {
+            const tid = cert.json.value()["extraData"]["titleId"]
             const pdatar = await PData.findOne({ xuid: cert.getXuid() });
 
             if (!pdatar) {
@@ -65,14 +69,14 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
                     username: cert.getIdentityName(),
                     xuid: cert.getXuid(),
                     uuid: cert.getIdentityString(),
-                    tid: cert.json.value()["extraData"]["titleId"],
+                    tid: tid,
                     deviceos: connreqdata["DeviceOS"],
                     devicemodel: connreqdata["DeviceModel"],
                     deviceid: connreq.getDeviceId()
                 });
                 await pdata.save();
             } else {
-                if (pdatar.devicemodel === connreqdata["DeviceModel"] && pdatar.deviceid !== connreq.getDeviceId() && config.modules.deviceidspoof.T1 === true) {
+                if (pdatar.devicemodel === connreqdata["DeviceModel"] && pdatar.deviceid !== connreq.getDeviceId()) {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Device ID Spoof [T1]\nDiscord: ${config.discord}`);
                     console.log(`${config.prefix}\nPlayer ${cert.getIdentityName()} was kicked for Device ID Spoof [T1] This means the player is using a device id spoofer.`);
                     if (config.webhook !== "None") {
@@ -87,10 +91,25 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
                     }
                     return;
                 }
+                if (pdatar.tid === Number(tid) && pdatar.deviceos !== connreqdata["DeviceOS"] && config.modules.devicespoof.T1 === true) {
+                    bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Device Spoof [T1]\nDiscord: ${config.discord}`);
+                    console.log(`${config.prefix}\nPlayer ${cert.getIdentityName()} was kicked for Device Spoof [T1] This means the player is using a device spoofer.`);
+                    if (config.webhook !== "None") {
+                        const embeds: embed[] = [
+                            {
+                                title: 'Device Spoof [T1]',
+                                description: `Kicked ${cert.getIdentityName()} for Device Spoof [T1] This means the player is using a device spoofer.`,
+                                color: 65280,
+                            },
+                        ];
+                        sendwebhook(config.webhook, embeds);
+                    }
+                    return;
+                }
                 pdatar.username = cert.getIdentityName();
                 pdatar.xuid = cert.getXuid();
                 pdatar.uuid = cert.getIdentityString();
-                pdatar.tid = cert.json.value()["extraData"]["titleId"];
+                pdatar.tid = tid;
                 pdatar.deviceos = connreqdata["DeviceOS"];
                 pdatar.devicemodel = connreqdata["DeviceModel"];
                 pdatar.deviceid = connreq.getDeviceId();
@@ -125,7 +144,6 @@ function Sequence(): void {
     }).catch(err => {
         console.error(`Error connecting to mongodb: ${err}`);
     });
-    console.log('[Atomic-AntiCheat] Loaded Device ID Spoof Detections');
     import("./modules/bot");
     import("./modules/badpacket");
     import("./modules/speed");
@@ -135,6 +153,8 @@ function Sequence(): void {
     import("./modules/nofall");
     import("./modules/seedhide");
     import("./modules/antivpn");
+    console.log('[Atomic-AntiCheat] Loaded Device ID Spoof Detections');
+    console.log('[Atomic-AntiCheat] Loaded Device Spoof Detections');
 }
 
 events.serverOpen.on(Sequence);

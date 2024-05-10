@@ -38,6 +38,9 @@
         "deviceidspoof": {
             "T1": true
         },
+        "devicespoof": {
+            "T1": true 
+        },
         "seedhider": false
     }
 }
