@@ -60,6 +60,7 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
         const cert = connreq.getCertificate();
         const connreqdata = connreq.getJsonValue()!;
         if (cert && cert.getIdentityName() && cert.getXuid() && cert.getIdentityString()) {
+            const ip = ni.getAddress().split("|")[0];
             const tid = cert.json.value()["extraData"]["titleId"];
             const deviceid = connreq.getDeviceId();
             const certUsername = cert.getIdentityName();
@@ -72,7 +73,7 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
 
             if (!pdatar) {
                 const pdata = new PData({
-                    ip: ni.getAddress(),
+                    ip: ip,
                     username: certUsername,
                     xuid: certXuid,
                     uuid: certUuid,
@@ -127,7 +128,15 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
         }
     }
 };
-
+events.playerJoin.on(async ev => {
+    const ip = ev.player.getNetworkIdentifier()?.getAddress().split("|")[0];
+    const xuid = ev.player.getNetworkIdentifier()?.getActor()?.getXuid()
+    if (ev.isSimulated === true) return;
+    if (ip && xuid) {
+        const pdata = await PData.findOne({ xuid: xuid });
+        pdata.ip = ip
+    }
+})
 events.packetAfter(MinecraftPacketIds.Login).on(login);
 
 function Sequence(): void {
