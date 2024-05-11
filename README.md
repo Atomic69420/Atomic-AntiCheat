@@ -37,7 +37,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [x] NoFall
 - [x] .xp
 - [x] VPNs/Proxies
-- [ ] Alt Detection
+- [x] Alt Detection
 - [x] Device ID Spoof
 - [x] Device Spoof/Edition Faker
 ### Bot Detections
