@@ -67,3 +67,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Device ID Spoof [T1] (Kicks players who are on the same device but have a different device id.)
 ### Device Spoof Detections
 - Device Spoof [T1] (Kicks players who are on the same device but have a different device os.)
+### Alt Detections
+- Alt Detection [T1] (Kicks players who have had another account joined the server with the same IP.)
