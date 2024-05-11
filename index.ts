@@ -36,6 +36,10 @@ import * as mongoose from "mongoose";
         devicespoof: {
             [key: string]: boolean;
             T1?: boolean;
+          },
+          altdetection: {
+            [key: string]: boolean;
+            T1?: boolean;
           }
       };
     }
@@ -70,8 +74,9 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
             const certDeviceOS = connreqdata["DeviceOS"];
 
             const pdatar = await PData.findOne({ xuid: certXuid });
+            const pdataip = await PData.find({ ip: ip });
 
-            if (!pdatar) {
+            if (!pdatar && pdataip.length === 0) {
                 const pdata = new PData({
                     ip: ip,
                     username: certUsername,
@@ -84,6 +89,21 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
                 });
                 await pdata.save();
             } else {
+                if (pdataip.length === 1 && !pdatar && config.modules.altdetection.T1 === true) {
+                    bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Alt Detection [T1]\nDiscord: ${config.discord}`);
+                    console.log(`${config.prefix}\nPlayer ${certUsername} was kicked for Alt Detection [T1] This means the player has an alt. Real Account: ${pdataip.username}`);
+                    if (config.webhook !== "None") {
+                        const embeds: embed[] = [
+                            {
+                                title: 'Alt Detection [T1]',
+                                description: `Kicked ${certUsername} for Alt Detection [T1] This means the player has an alt. Real Account: ${pdataip.username}`,
+                                color: 65280,
+                            },
+                        ];
+                        sendwebhook(config.webhook, embeds);
+                    }
+                    return;
+                }
                 if (pdatar.deviceid !== "null" && pdatar.devicemodel === certDeviceModel && pdatar.deviceid !== deviceid && config.modules.deviceidspoof.T1 === true) {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Device ID Spoof [T1]\nDiscord: ${config.discord}`);
                     console.log(`${config.prefix}\nPlayer ${certUsername} was kicked for Device ID Spoof [T1] This means the player is using a device id spoofer.`);
