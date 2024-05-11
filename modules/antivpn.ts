@@ -85,7 +85,7 @@ import { bedrockServer } from "bdsx/launcher";
             const cert = connreq.cert
             const username = cert.getIdentityName()
             const connreqdata = connreq.getJsonValue()!;
-            const proxyStatus = await getproxy(ni.getAddress())
+            const proxyStatus = await getproxy(ni.getAddress().split("|")[0])
             if (proxyStatus.proxy === true) {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Anti VPN [T1]\nDiscord: ${config.discord}`);
                 console.log(`${config.prefix}\nPlayer ${username} was kicked for Anti VPN [T1] This means the player was using a vpn, VPNIP: ${ni.getAddress()}.`)
