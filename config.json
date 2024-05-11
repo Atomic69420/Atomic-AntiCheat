@@ -41,6 +41,9 @@
         "devicespoof": {
             "T1": true 
         },
+        "altdetection": {
+            "T1": true
+        },
         "seedhider": false
     }
 }

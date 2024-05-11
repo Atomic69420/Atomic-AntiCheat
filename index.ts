@@ -84,7 +84,7 @@ const login = async (pkt: LoginPacket, ni: NetworkIdentifier) => {
                 });
                 await pdata.save();
             } else {
-                if (pdatar.deviceid !== "null" && pdatar.devicemodel === certDeviceModel && pdatar.deviceid !== deviceid) {
+                if (pdatar.deviceid !== "null" && pdatar.devicemodel === certDeviceModel && pdatar.deviceid !== deviceid && config.modules.deviceidspoof.T1 === true) {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Device ID Spoof [T1]\nDiscord: ${config.discord}`);
                     console.log(`${config.prefix}\nPlayer ${certUsername} was kicked for Device ID Spoof [T1] This means the player is using a device id spoofer.`);
                     if (config.webhook !== "None") {
