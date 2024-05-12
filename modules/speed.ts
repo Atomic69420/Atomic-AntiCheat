@@ -47,6 +47,7 @@ import { CANCEL } from "bdsx/common";
           if (actor?.isCreative() !== undefined && actor.isCreative() === true) return;
           if (isRiding === true) return;
           if (actor?.getLastHurtByMobTime() !== undefined && actor?.getLastHurtByMobTime() !== 0) return;
+          if (actor?.getLastHurtCause() === 11) return;
           if (elytra !== undefined) {
           if (elytra.getRawNameId() === "elytra") return;
           }
