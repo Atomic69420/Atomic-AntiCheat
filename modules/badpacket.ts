@@ -42,7 +42,7 @@ import { serverProperties } from "bdsx/serverproperties";
            const embeds: embed[] = [
              {
                  title: 'Bad Packet [T2]',
-                 description: `Kicked ${username} for Bad Packet [T1] This means the player sent a EntityEvent packet trying to get xp.`,
+                 description: `Kicked ${username} for Bad Packet [T2] This means the player sent a EntityEvent packet trying to get xp.`,
                  color: 65280,
              },
          ];
