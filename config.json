@@ -44,6 +44,14 @@
         "altdetection": {
             "T1": true
         },
+        "blocked-devices": {
+            "Windows": false,
+            "Android": false,
+            "iOS": false,
+            "Xbox": false,
+            "PlayStation": false,
+            "Nintendo": false
+        },
         "seedhider": false
     }
 }
