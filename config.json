@@ -44,7 +44,7 @@
         "altdetection": {
             "T1": true
         },
-        "blocked-devices": {
+        "deviceblock": {
             "Windows": false,
             "Android": false,
             "iOS": false,

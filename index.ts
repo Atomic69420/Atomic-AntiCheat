@@ -189,6 +189,7 @@ function Sequence(): void {
     import("./modules/nofall");
     import("./modules/seedhide");
     import("./modules/antivpn");
+    import("./modules/deviceblock")
     console.log('[Atomic-AntiCheat] Loaded Device ID Spoof Detections');
     console.log('[Atomic-AntiCheat] Loaded Device Spoof Detections');
 }
