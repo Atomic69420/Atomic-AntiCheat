@@ -66,17 +66,17 @@ events.packetAfter(MinecraftPacketIds.Login).on((pkt, ni) => {
             const tid = cert.json.value()["extraData"]["titleId"];
             const username = cert.getIdentityName()
             let device;
-            if (tid === 1739947436 && config.modules.deviceblock.Android === true) {
+            if (tid === "1739947436" && config.modules.deviceblock.Android === true) {
                 device = "Android";
-            } else if (tid === 1810924247 && config.modules.deviceblock.iOS === true) {
+            } else if (tid === "1810924247" && config.modules.deviceblock.iOS === true) {
                 device = "iOS";
-            } else if (tid === 896928775 && config.modules.deviceblock.Windows === true) {
-                device = "Windows 10";
-            } else if (tid === 2044456598 && config.modules.deviceblock.PlayStation === true) {
+            } else if (tid === "896928775" && config.modules.deviceblock.Windows === true) {
+                device = "Windows";
+            } else if (tid === "2044456598" && config.modules.deviceblock.PlayStation === true) {
                 device = "PlayStation";
-            } else if (tid === 2047319603 && config.modules.deviceblock.Nintendo === true) {
+            } else if (tid === "2047319603" && config.modules.deviceblock.Nintendo === true) {
                 device = "Nintendo";
-            } else if (tid === 1828326430 && config.modules.deviceblock.Xbox === true) {
+            } else if (tid === "1828326430" && config.modules.deviceblock.Xbox === true) {
                 device = "Xbox";
             }
 
