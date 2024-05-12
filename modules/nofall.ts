@@ -47,28 +47,40 @@ import { CANCEL } from "bdsx/common";
           }
       };
     }
-    let rps: number = 0
-    setInterval(() => {
-        rps = 0
-    }, 1000);
     const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
     const config: acconfig = JSON.parse(configdata);
+    const rps = new Map<string, number>()
+    if (config.modules.nofall.T1 === true) {
+    setInterval(() => {
+        for (const player of bedrockServer.serverInstance.getPlayers()) {
+            if (!player) return;
+             const rpsm = rps.get(player.getName())
+             if (rpsm) {
+                 rps.set(player.getName(), 0)
+             }
+        }
+      }, 1000);
+    }
     events.packetBefore(MinecraftPacketIds.PlayerAction).on((pkt, ni) => {
         if (config.modules.nofall.T1 === false) return;
         const username = ni.getActor()?.getName()
         if (pkt.action === 7) {
-        rps++
+          const rpsm = rps.get(ni.getActor()?.getName())
+          if (rpsm) {
+        rps.set(ni.getActor()?.getName(), rpsm + 1)
+          }
         }
-        if (rps >= 3) {
+        const rpsm = rps.get(ni.getActor()?.getName())
+        if (rpsm === undefined) return;
+        if (rpsm >= 2) {
             if (username) {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T1]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nPlayer ${username} was kicked for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`);
-                    
+                    console.log(`${config.prefix}\nPlayer ${username} was kicked for NoFall [T1] This means the player sent 2 respawn actions within a second.`);
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'NoFall [T1]',
-                                description: `Kicked ${username} for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`,
+                                description: `Kicked ${username} for NoFall [T1] This means the player sent 2 respawn actions within a second.`,
                                 color: 65280,
                             },
                         ];
@@ -79,13 +91,12 @@ import { CANCEL } from "bdsx/common";
                     return CANCEL;
             } else {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T1]\nDiscord: ${config.discord}`);
-                console.log(`${config.prefix}\nA player was kicked for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`);
-                
+                console.log(`${config.prefix}\nA player was kicked for NoFall [T1] This means the player sent 2 respawn actions within a second.`);
                 if (config.webhook !== "None") {
                     const embeds: embed[] = [
                         {
                             title: 'NoFall [T1]',
-                            description: `Kicked a player for NoFall [T1] This means the player sent more than 2 respawn actions within a second.`,
+                            description: `Kicked a player for NoFall [T1] This means the player sent 2 respawn actions within a second.`,
                             color: 65280,
                         },
                     ];
