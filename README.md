@@ -33,7 +33,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - [x] Bad Packets
 - [x] Crasher
 - [x] Invisible Skins
-- [ ] Device Blocking
+- [x] Device Blocking
 - [x] NoFall
 - [x] .xp
 - [x] VPNs/Proxies
@@ -69,3 +69,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Device Spoof [T1] (Kicks players who are on the same device but have a different device os.)
 ### Alt Detections
 - Alt Detection [T1] (Kicks players who have had another account joined the server with the same IP.)
+### Device Block
+- Device Block (Kicks players who are on a blocked device set in the config.json.)
