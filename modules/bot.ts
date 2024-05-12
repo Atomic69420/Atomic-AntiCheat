@@ -59,7 +59,7 @@ import { CANCEL } from "bdsx/common";
         }
         if (config.modules.bot.T2 === true) {
           if (devicemodel === "PrismarineJS") {
-              bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T2]\nDiscord: ${config.discord}`);
+              bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
               console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T2] This means the player is a bot`)
               if (config.webhook !== "None") {
                 const embeds: embed[] = [
@@ -76,7 +76,7 @@ import { CANCEL } from "bdsx/common";
       }
       if (config.modules.bot.T4 === true) {
         if (typeof connreqdata.ClientRandomId === "string") {
-          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T4]\nDiscord: ${config.discord}`);
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
               console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T4] This means the player is a bot`)
               if (config.webhook !== "None") {
                 const embeds: embed[] = [
@@ -98,7 +98,7 @@ import { CANCEL } from "bdsx/common";
     
     if (config.modules.bot.T3 === true) {
         if (username) {
-            bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
+            bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
             console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`);
             
             if (config.webhook !== "None") {
@@ -115,7 +115,7 @@ import { CANCEL } from "bdsx/common";
             
             return CANCEL;
         } else {
-            bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T3]\nDiscord: ${config.discord}`);
+            bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
             console.log(`${config.prefix}\nA player was kicked for Suspected Bot [T3] This means the player requested for a sub client to join which is a fake player.`);
             
             if (config.webhook !== "None") {
@@ -139,7 +139,7 @@ events.packetBefore(MinecraftPacketIds.TickSync).on((pkt, ni) => {
     
   if (config.modules.bot.T5 === true) {
       if (username) {
-          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T5]\nDiscord: ${config.discord}`);
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
           console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`);
           
           if (config.webhook !== "None") {
@@ -156,7 +156,7 @@ events.packetBefore(MinecraftPacketIds.TickSync).on((pkt, ni) => {
           
           return CANCEL;
       } else {
-          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T5]\nDiscord: ${config.discord}`);
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
           console.log(`${config.prefix}\nA player was kicked for Suspected Bot [T5] This means the player sent a tick_sync packet which is used in bedrock protocol.`);
           
           if (config.webhook !== "None") {
