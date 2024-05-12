@@ -30,7 +30,8 @@
             "T2": true
         },
         "nofall": {
-            "T1": true
+            "T1": true,
+            "T2": true
         },
         "antivpn": {
             "T1": true

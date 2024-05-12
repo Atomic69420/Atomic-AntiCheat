@@ -44,6 +44,7 @@ import { CANCEL } from "bdsx/common";
           nofall: {
             [key: string]: boolean;
             T1?: boolean;
+            T2?: boolean;
           }
       };
     }
@@ -62,8 +63,45 @@ import { CANCEL } from "bdsx/common";
       }, 1000);
     }
     events.packetBefore(MinecraftPacketIds.PlayerAction).on((pkt, ni) => {
+      console.log(pkt)
+      console.log(rps.get(ni.getActor()?.getName()))
+      const username = ni.getActor()?.getName()
+      if (pkt.action === 7 && pkt.face === 0 && config.modules.nofall.T2 === true) {
+        if (username) {
+          bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T2]\nDiscord: ${config.discord}`);
+                  console.log(`${config.prefix}\nPlayer ${username} was kicked for NoFall [T2] This means the player sent a invalid respawn packet.`);
+                  if (config.webhook !== "None") {
+                      const embeds: embed[] = [
+                          {
+                              title: 'NoFall [T2]',
+                              description: `Kicked ${username} for NoFall [T2] This means the player sent a invalid respawn packet.`,
+                              color: 65280,
+                          },
+                      ];
+                      
+                      sendwebhook(config.webhook, embeds);
+                  }
+                  
+                  return CANCEL;
+          } else {
+              bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T2]\nDiscord: ${config.discord}`);
+              console.log(`${config.prefix}\nA player was kicked for NoFall [T2] This means the player sent a invalid respawn packet.`);
+              if (config.webhook !== "None") {
+                  const embeds: embed[] = [
+                      {
+                          title: 'NoFall [T2]',
+                          description: `Kicked a player for NoFall [T1] This means the player sent a invalid respawn packet.`,
+                          color: 65280,
+                      },
+                  ];
+                  
+                  sendwebhook(config.webhook, embeds);
+              }
+              
+              return CANCEL;
+        }
+      }
         if (config.modules.nofall.T1 === false) return;
-        const username = ni.getActor()?.getName()
         if (pkt.action === 7) {
           const rpsm = rps.get(ni.getActor()?.getName())
           if (rpsm) {
@@ -71,7 +109,10 @@ import { CANCEL } from "bdsx/common";
           }
         }
         const rpsm = rps.get(ni.getActor()?.getName())
-        if (rpsm === undefined) return;
+        if (rpsm === undefined) {
+          rps.set(ni.getActor()?.getName(), 0)
+          return;
+        }
         if (rpsm >= 2) {
             if (username) {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T1]\nDiscord: ${config.discord}`);
