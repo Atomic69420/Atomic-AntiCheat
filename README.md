@@ -55,7 +55,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Crasher [T1] (Kicks players who attempt to send a /me, /tell, /w or /msg command which can have a @e in it causing for a large message or unexpected behavior from the server.)
 - Crasher [T2] (Kicks players who send more than or 20 messages in 1 second since sending alot of messages can freeze the server but this detection can not stop it from freezing.)
 ### Reach Detections
-- Reach [T1] (Kicks players who hit a entity from or more than 4 blocks away.)
+- Reach [T1] (Kicks players who hit a entity from or more than the max amount of blocks set in the config. default: 4.9.)
 ### Invisible Skin Detections
 - Bad Skin [T1] (Kicks players who try to join with a invisible skin equipped.)
 - Bad Skin [T2] (Kicks players who try to change to a invisible skin while ingame.)

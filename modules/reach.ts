@@ -35,6 +35,7 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
         reach: {
             [key: string]: boolean;
             T1?: boolean;
+            maxreach?: number;
           }
       };
     }
@@ -51,7 +52,8 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
         const dx = event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()?.getPosition().x - event.entity.getPosition().x;
         const dz = event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()?.getPosition().z - event.entity.getPosition().z
         const distance = Math.sqrt(dx * dx + dz * dz);
-        if (distance >= 4.9) {
+        if (config.modules.reach.maxreach === undefined) config.modules.reach.maxreach = 4.9
+        if (distance >= config.modules.reach.maxreach) {
           if (config.modules.reach.T1 === true) {
             if (item !== undefined) {
               if (EnchantUtils.getEnchantLevel(Enchant.Type.WeaponKnockback, item) > 0) return;

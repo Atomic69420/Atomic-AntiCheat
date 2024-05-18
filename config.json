@@ -23,7 +23,8 @@
             "T2": true
         },
         "reach": {
-            "T1": true
+            "T1": true,
+            "maxreach": 4.9
         },
         "badskin": {
             "T1": true,
