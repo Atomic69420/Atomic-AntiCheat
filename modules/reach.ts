@@ -40,23 +40,24 @@ import { EnchantUtils, Enchant } from "bdsx/bds/enchants";
     }
     const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
     const config: acconfig = JSON.parse(configdata);
-    events.entityKnockback.on(event => {
-        if (event.source && event.target) {
-   if (event.source.isPlayer() === false) return;
-   if (event.source.isMob() === false) return;
-   if (event.target.getEntityTypeId() === 2854) return;
-   const item = event.source.getNetworkIdentifier()?.getActor()?.getMainhandSlot()  
-   const username = event.source.getNetworkIdentifier()?.getActor()?.getName()
-        const dx = event.source.getPosition().x - event.target.getPosition().x;
-        const dz = event.source.getPosition().z - event.target.getPosition().z
-const distance = Math.sqrt(dx * dx + dz * dz);
-if (distance >= 4.9) {
-    if (config.modules.reach.T1 === true) {
-      if (item !== undefined) {
-        if (EnchantUtils.getEnchantLevel(Enchant.Type.WeaponKnockback, item) > 0) return;
-      }
-        if (username) {
-        bedrockServer.serverInstance.disconnectClient(event.source.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
+    events.entityHurt.on(event => {
+       if (event.damageSource.getDamagingEntity()) {
+        if (event.damageSource.getDamagingEntity()?.isPlayer() === false) return;
+        if (event.entity.getEntityTypeId() === 2854) return;
+        if (event.damageSource.cause !== 2) return;
+        if (event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()) {
+        const item = event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()?.getMainhandSlot()  
+        const username = event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()?.getName()
+        const dx = event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()?.getPosition().x - event.entity.getPosition().x;
+        const dz = event.damageSource.getDamagingEntity()?.getNetworkIdentifier()?.getActor()?.getPosition().z - event.entity.getPosition().z
+        const distance = Math.sqrt(dx * dx + dz * dz);
+        if (distance >= 4.9) {
+          if (config.modules.reach.T1 === true) {
+            if (item !== undefined) {
+              if (EnchantUtils.getEnchantLevel(Enchant.Type.WeaponKnockback, item) > 0) return;
+            }
+            if (username) {
+              bedrockServer.serverInstance.disconnectClient(event.damageSource.getDamagingEntity()?.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
                     console.log(`${config.prefix}\n${username} was kicked for Reach [T1] This means the player hit a entity from or more than 4 blocks away.`);
                     
                     if (config.webhook !== "None") {
@@ -73,7 +74,7 @@ if (distance >= 4.9) {
                     
                     return CANCEL;
                 } else {
-                    bedrockServer.serverInstance.disconnectClient(event.source.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
+                    bedrockServer.serverInstance.disconnectClient(event.damageSource.getDamagingEntity()?.getNetworkIdentifier(), `${config.prefix}\nYou Have Been Kicked!\nReason: Reach [T1]\nDiscord: ${config.discord}`);
                     console.log(`${config.prefix}\nA player was kicked for Reach [T1] This means the player hit a entity from 4 blocks away.`);
                     
                     if (config.webhook !== "None") {
@@ -89,8 +90,9 @@ if (distance >= 4.9) {
                     }
                     
                     return CANCEL;
-    }
-    }
+            }
+          }
         }
-    }
-    });
+        }
+       }
+    })
