@@ -46,6 +46,10 @@
         "altdetection": {
             "T1": true
         },
+        "autoclicker": {
+            "T1": true,
+            "maxcps": 20
+        },
         "deviceblock": {
             "Windows": false,
             "Android": false,
