@@ -25,7 +25,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 ## Detections
 ### Combat
 - [x] Reach
-- [ ] Autoclicker
+- [x] Autoclicker
 ### Movement
 - [x] Speed Hacks
 ### Misc
@@ -72,3 +72,5 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Alt Detection [T1] (Kicks players who have had another account joined the server with the same IP.)
 ### Device Block
 - Device Block (Kicks players who are on a blocked device set in the config.json.)
+### Autoclicker Detections
+- Autoclicker [T1] (Kicks players who click over a set amount in the config within a second.)
