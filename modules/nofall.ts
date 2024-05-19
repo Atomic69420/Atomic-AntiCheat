@@ -63,8 +63,6 @@ import { CANCEL } from "bdsx/common";
       }, 1000);
     }
     events.packetBefore(MinecraftPacketIds.PlayerAction).on((pkt, ni) => {
-      console.log(pkt)
-      console.log(rps.get(ni.getActor()?.getName()))
       const username = ni.getActor()?.getName()
       if (pkt.action === 7 && pkt.face === 0 && config.modules.nofall.T2 === true) {
         if (username) {
@@ -107,9 +105,8 @@ import { CANCEL } from "bdsx/common";
           if (rpsm) {
         rps.set(ni.getActor()?.getName(), rpsm + 1)
           }
-        }
-        const rpsm = rps.get(ni.getActor()?.getName())
-        if (rpsm === undefined) {
+        
+        if (!rpsm) {
           rps.set(ni.getActor()?.getName(), 0)
           return;
         }
@@ -148,4 +145,5 @@ import { CANCEL } from "bdsx/common";
                 return CANCEL;
             }
         }
+      }
     })
