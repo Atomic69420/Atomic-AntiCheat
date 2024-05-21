@@ -48,30 +48,24 @@ import { MinecraftPacketIds } from "bdsx/bds/packetids";
     const config: acconfig = JSON.parse(configdata);
     const cps = new Map<string, number>()
     if (config.modules.autoclicker.T1 === true) {
-    setInterval(() => {
-        for (const player of bedrockServer.serverInstance.getPlayers()) {
-            if (!player) return;
-             const cpsm = cps.get(player.getName())
-             if (cpsm) {
-                cps.set(player.getName(), 0)
-             }
-        }
+      setInterval(() => {
+          for (const player of bedrockServer.serverInstance.getPlayers()) {
+              if (player) {
+                  cps.set(player.getName(), 0);
+              }
+          }
       }, 1000);
-    }
+  }
     events.packetBefore(MinecraftPacketIds.InventoryTransaction).on((pkt, ni) => {
+      if (pkt.transaction?.isItemUseOnEntityTransaction() === false) return;
       const username = ni.getActor()?.getName()
       if (username) {
-        const cpsm = cps.get(username)
-        if (cpsm) {
-            cps.set(username, cpsm + 1)
-        } else {
-          cps.set(username, 0)
-          return;
-        }
+        const cpsm = cps.get(username) || 0
+        cps.set(username, cpsm + 1)
         if (!config.modules.autoclicker.maxcps) config.modules.autoclicker.maxcps = 20
         if (cpsm >= config.modules.autoclicker.maxcps) {
           bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Autoclicker [T1], CPS: ${cpsm}\nDiscord: ${config.discord}`);
-          console.log(`${config.prefix}\nPlayer ${username} was kicked for Autoclicker [T1] This means the player attacked at a rate of ${cpsm} which is greater than ${config.modules.autoclicker.maxcps}.`);
+          console.log(`${config.prefix}\nPlayer ${username} was kicked for Autoclicker [T1] This means the player attacked at a rate of ${cpsm} which is greater than${config.modules.autoclicker.maxcps}.`);
           
           if (config.webhook !== "None") {
               const embeds: embed[] = [
@@ -86,6 +80,7 @@ import { MinecraftPacketIds } from "bdsx/bds/packetids";
           }
           
           return CANCEL;
+        }
       } else {
         bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Autoclicker [T1], CPS: ${cpsm}\nDiscord: ${config.discord}`);
         console.log(`${config.prefix}\nA player was kicked for Autoclicker [T1] This means the player attacked at a rate of ${cpsm} which is greater than ${config.modules.autoclicker.maxcps}.`);
@@ -104,5 +99,4 @@ import { MinecraftPacketIds } from "bdsx/bds/packetids";
           
           return CANCEL;
       }
-        }
     })
