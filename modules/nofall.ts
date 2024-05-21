@@ -101,15 +101,8 @@ import { CANCEL } from "bdsx/common";
       }
         if (config.modules.nofall.T1 === false) return;
         if (pkt.action === 7) {
-          const rpsm = rps.get(ni.getActor()?.getName())
-          if (rpsm) {
+          const rpsm = rps.get(ni.getActor()?.getName()) || 0
         rps.set(ni.getActor()?.getName(), rpsm + 1)
-          }
-        
-        if (!rpsm) {
-          rps.set(ni.getActor()?.getName(), 0)
-          return;
-        }
         if (rpsm >= 2) {
             if (username) {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: NoFall [T1]\nDiscord: ${config.discord}`);
