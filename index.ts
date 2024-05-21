@@ -178,7 +178,7 @@ function Sequence(): void {
     }).then(() => {
         console.log(`[Atomic-AntiCheat] Connected to mongodb`);
     }).catch(err => {
-        console.error(`Error connecting to mongodb: ${err}`);
+        throw new Error(`Error connecting to mongodb: ${err}`);
     });
     import("./modules/bot");
     import("./modules/badpacket");
