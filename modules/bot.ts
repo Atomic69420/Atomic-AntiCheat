@@ -40,6 +40,7 @@ import { CANCEL } from "bdsx/common";
             const tid = cert.json.value()["extraData"]["titleId"];
             const username = cert.getIdentityName()
             const devicemodel = connreq.getJsonValue()!["DeviceModel"];
+            const skinid = connreqdata.SkinId
             if (config.modules.bot.T1 === true) {
             if (tid === "2047319603") {
                 bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot [T1]\nDiscord: ${config.discord}`);
@@ -60,7 +61,7 @@ import { CANCEL } from "bdsx/common";
         if (config.modules.bot.T2 === true) {
           if (devicemodel === "PrismarineJS") {
               bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
-              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T2] This means the player is a bot`)
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T2] This means the player is a bot.`)
               if (config.webhook !== "None") {
                 const embeds: embed[] = [
                   {
@@ -77,7 +78,7 @@ import { CANCEL } from "bdsx/common";
       if (config.modules.bot.T4 === true) {
         if (typeof connreqdata.ClientRandomId === "string") {
           bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
-              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T4] This means the player is a bot`)
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T4] This means the player is a bot.`)
               if (config.webhook !== "None") {
                 const embeds: embed[] = [
                   {
@@ -91,6 +92,23 @@ import { CANCEL } from "bdsx/common";
               }
         }
       }
+      if (config.modules.bot.T6 === true) {
+        if (skinid === '5eb65f73-af11-448e-82aa-1b7b165316ad.persona-3891382d5e3f67c4-0') {
+            bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Suspected Bot\nDiscord: ${config.discord}`);
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Suspected Bot [T6] This means the player is a bot.`)
+              if (config.webhook !== "None") {
+                const embeds: embed[] = [
+                  {
+                      title: 'Suspected Bot [T6]',
+                      description: `Kicked ${username} for Suspected Bot [T6] This means the player is a bot.`,
+                      color: 65280,
+                  },
+              ];
+              
+              sendwebhook(config.webhook, embeds);
+              }
+        }
+    }
     }
   })
   events.packetBefore(MinecraftPacketIds.SubClientLogin).on((pkt, ni) => {
