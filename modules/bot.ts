@@ -19,6 +19,7 @@ import { CANCEL } from "bdsx/common";
           T3?: boolean;
           T4?: boolean;
           T5?: boolean;
+          T6?: boolean;
         };
         badpacket: {
           [key: string]: boolean;
