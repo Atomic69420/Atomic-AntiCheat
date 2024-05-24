@@ -93,7 +93,7 @@ import { bedrockServer } from "bdsx/launcher";
                   const embeds: embed[] = [
                     {
                         title: 'Anti VPN [T1]',
-                        description: `Kicked ${username} for Anti VPN [T1] This means the player was using a vpn, VPNIP: ${ni.getAddress()}`,
+                        description: `Kicked ${username} for Anti VPN [T1] This means the player was using a vpn, VPNIP: ${ni.getAddress()}.`,
                         color: 65280,
                     },
                 ];

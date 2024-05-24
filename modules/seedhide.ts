@@ -40,7 +40,7 @@ import { serverProperties } from "bdsx/serverproperties";
     const config: acconfig = JSON.parse(configdata);
     if (config.modules.seedhider === true) {
         if (serverProperties["client-side-chunk-generation-enabled"] === true) {
-            console.log(`Seed hider causes issues when client-side-chunk-generation-enabled is set to true in server.properties please disable it or set seedhider to false in config.json for no further issues`)
+            console.log(`Seed hider causes issues when client-side-chunk-generation-enabled is set to true in server.properties please disable it or set seedhider to false in config.json for no further issues.`)
         }
         events.packetSend(MinecraftPacketIds.StartGame).on((pkt, ni) => {
             pkt.settings.seed = 0;

@@ -57,13 +57,13 @@ import { CANCEL } from "bdsx/common";
           if (Math.abs(pkt.delta.x) > 0.5 || Math.abs(pkt.delta.z) > 0.5) {
             if (username) {
               bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Speed [T1]\nDiscord: ${config.discord}`);
-              console.log(`${config.prefix}\nPlayer ${username} was kicked for Speed [T1] This means the player was moving too fast`);
+              console.log(`${config.prefix}\nPlayer ${username} was kicked for Speed [T1] This means the player was moving too fast.`);
               
               if (config.webhook !== "None") {
                   const embeds: embed[] = [
                       {
                           title: 'Speed [T1]',
-                          description: `Kicked ${username} for Speed [T1] This means the player was moving too fast`,
+                          description: `Kicked ${username} for Speed [T1] This means the player was moving too fast.`,
                           color: 65280,
                       },
                   ];
@@ -73,13 +73,13 @@ import { CANCEL } from "bdsx/common";
               return CANCEL;
           } else {
               bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Speed [T1]\nDiscord: ${config.discord}`);
-              console.log(`${config.prefix}\nA player was kicked for Speed [T1] This means the player was moving too fast`);
+              console.log(`${config.prefix}\nA player was kicked for Speed [T1] This means the player was moving too fast.`);
               
               if (config.webhook !== "None") {
                   const embeds: embed[] = [
                       {
                           title: 'Speed [T1]',
-                          description: `Kicked a player for Speed [T1] This means the player was moving too fast`,
+                          description: `Kicked a player for Speed [T1] This means the player was moving too fast.`,
                           color: 65280,
                       },
                   ];

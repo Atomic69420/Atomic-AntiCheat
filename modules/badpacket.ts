@@ -52,7 +52,7 @@ import { serverProperties } from "bdsx/serverproperties";
         return CANCEL;
         } else {
           bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Bad Packet [T2]\nDiscord: ${config.discord}`);
-          console.log(`${config.prefix}\nA player was kicked for Bad Packet [T2] This means the player sent a EntityEvent packet trying to get xp..`)
+          console.log(`${config.prefix}\nA player was kicked for Bad Packet [T2] This means the player sent a EntityEvent packet trying to get xp.`)
           if (config.webhook !== "None") {
             const embeds: embed[] = [
               {
