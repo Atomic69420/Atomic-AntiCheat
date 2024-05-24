@@ -30,14 +30,17 @@ import { CANCEL } from "bdsx/common";
         crasher: {
           [key: string]: boolean;
           T1?: boolean;
-          T2?: boolean;
+          T2?: {
+            enabled?: boolean;
+            maxtextpersecond?: number
+          }
         }
       };
     }
     const configdata = fs.readFileSync(path.join(__dirname, "../config.json"), 'utf8');
     const config: acconfig = JSON.parse(configdata);
     const ptps = new Map<string, number>()
-    if (config.modules.crasher.T2 === true) {
+    if (config.modules.crasher.T2?.enabled === true) {
     setInterval(() => {
         for (const player of bedrockServer.serverInstance.getPlayers()) {
             if (!player) return;
@@ -95,26 +98,26 @@ import { CANCEL } from "bdsx/common";
         }
       })
       events.packetBefore(MinecraftPacketIds.Text).on((pkt, ni) => {
-      if (config.modules.crasher.T2 === true) {
+      if (config.modules.crasher.T2?.enabled === true) {
         const cptps = ptps.get(ni.getActor()?.getName())
         if (cptps === undefined) { 
             ptps.set(ni.getActor()?.getName(), 0)
             return;
         }
         ptps.set(ni.getActor()?.getName(), cptps + 1)
-      
-       if (cptps >= 20) {
+     if (!config.modules.crasher.T2.maxtextpersecond) config.modules.crasher.T2.maxtextpersecond = 20
+       if (cptps >= config.modules.crasher.T2.maxtextpersecond) {
         const username = ni.getActor()?.getName()
     
                 if (username) {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Crasher [T2]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nPlayer ${username} was kicked for Crasher [T2] This means the player sent 20 text messages in 1 second.`);
+                    console.log(`${config.prefix}\nPlayer ${username} was kicked for Crasher [T2] This means the player sent ${config.modules.crasher.T2.maxtextpersecond} text messages in 1 second.`);
                     
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'Crasher [T2]',
-                                description: `Kicked ${username} for Crasher [T2] This means the player sent 20 text messages in 1 second.`,
+                                description: `Kicked ${username} for Crasher [T2] This means the player sent ${config.modules.crasher.T2.maxtextpersecond} text messages in 1 second.`,
                                 color: 65280,
                             },
                         ];
@@ -125,13 +128,13 @@ import { CANCEL } from "bdsx/common";
                     return CANCEL;
                 } else {
                     bedrockServer.serverInstance.disconnectClient(ni, `${config.prefix}\nYou Have Been Kicked!\nReason: Crasher [T2]\nDiscord: ${config.discord}`);
-                    console.log(`${config.prefix}\nA player was kicked for Crasher [T2] This means the player sent 20 text messages in 1 second.`);
+                    console.log(`${config.prefix}\nA player was kicked for Crasher [T2] This means the player sent ${config.modules.crasher.T2.maxtextpersecond} text messages in 1 second.`);
                     
                     if (config.webhook !== "None") {
                         const embeds: embed[] = [
                             {
                                 title: 'Crasher [T2]',
-                                description: `Kicked a player for Crasher [T2] This means the player sent 20 text messages in 1 second.`,
+                                description: `Kicked a player for Crasher [T2] This means the player sent ${config.modules.crasher.T2.maxtextpersecond} text messages in 1 second.`,
                                 color: 65280,
                             },
                         ];

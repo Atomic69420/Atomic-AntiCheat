@@ -21,7 +21,10 @@
         },
         "crasher": {
             "T1": true,
-            "T2": true
+            "T2": {
+                "enabled": true,
+                "maxtextpersecond": 20
+            }
         },
         "reach": {
             "T1": true,
