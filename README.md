@@ -54,7 +54,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Speed [T1] (Kicks players who are going to fast such has 0.5 which is fast according to the servers calculations although if ServerAuthoritativeMovementMode is false this check will not be implemented.)
 ### Crasher Detections
 - Crasher [T1] (Kicks players who attempt to send a /me, /tell, /w or /msg command which can have a @e in it causing for a large message or unexpected behavior from the server.)
-- Crasher [T2] (Kicks players who send more than or 20 messages in 1 second since sending alot of messages can freeze the server but this detection can not stop it from freezing.)
+- Crasher [T2] (Kicks players who send more than or the set amount of messages set in the config in 1 second since sending alot of messages can freeze the server but this detection can not stop it from freezing.)
 ### Reach Detections
 - Reach [T1] (Kicks players who hit a entity from or more than the max amount of blocks set in the config. default: 4.9.)
 ### Invisible Skin Detections
