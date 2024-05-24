@@ -46,6 +46,7 @@ When first using this anticheat it is advised you edit the config.json to add we
 - Bot [T3] (Kicks players who request a sub client login which is a fake player that can often cause confusion.)
 - Bot [T4] (Kicks players who have their client random id as a string for it is to be a number.)
 - Bot [T5] (Kicks players who send a tick_sync packet which is used in bedrock protocol.)
+- Bot [T6] (Kicks players who have their skin id set as 5eb65f73-af11-448e-82aa-1b7b165316ad.persona-3891382d5e3f67c4-0 which is a defualt skin id for bots.)
 ### Bad Packet Detections
 - Bad Packet [T1] (Kicks players who send a move player packet this is only used when ServerAuthoritativeMovementMode is false and is used in hack clients for some movement hacks.)
 - Bad Packet [T2] (Kicks players who send a EntityEvent packet with a event of 34 which means they are attempting to gain xp through hacks.)
